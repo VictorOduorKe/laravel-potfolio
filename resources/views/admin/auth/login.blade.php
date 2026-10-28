@@ -36,7 +36,10 @@
             </div>
 
             <div style="margin-bottom: 28px;">
-                <label class="form-label" for="password">Master Password</label>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <label class="form-label" for="password" style="margin-bottom: 0;">Master Password</label>
+                    <a href="{{ route('admin.password.request') }}" style="font-size: 13px; color: var(--accent); text-decoration: none; font-weight: 600;">Forgot Password?</a>
+                </div>
                 <input type="password" id="password" name="password" class="form-control" required placeholder="••••••••••••">
             </div>
 

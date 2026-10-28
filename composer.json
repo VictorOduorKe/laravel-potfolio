@@ -59,7 +59,8 @@
         "platform": {
             "ext-dom": "20031129",
             "ext-xml": "8.4",
-            "ext-xmlwriter": "8.4"
+            "ext-xmlwriter": "8.4",
+            "php": "8.4"
         }
     },
     "minimum-stability": "stable",

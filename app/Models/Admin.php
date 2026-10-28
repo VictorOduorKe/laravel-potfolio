@@ -33,4 +33,33 @@ class Admin extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Send password reset notification to admin.
+     *
+     * @param  string  $token
+     * @return void
+     */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new \App\Notifications\AdminResetPasswordNotification($token));
+    }
+
+    /**
+     * Admins authenticate with two-factor OTP and do not use remember_token.
+     */
+    public function getRememberToken(): ?string
+    {
+        return null;
+    }
+
+    public function setRememberToken($value): void
+    {
+        // No-op: admins table uses OTP two-factor authentication instead of remember_token
+    }
+
+    public function getRememberTokenName(): string
+    {
+        return '';
+    }
 }

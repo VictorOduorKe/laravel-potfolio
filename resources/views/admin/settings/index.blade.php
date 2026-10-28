@@ -83,4 +83,22 @@
         <button type="submit" class="btn-hero-primary" style="padding: 12px 28px;">Save Settings</button>
     </form>
 </div>
+
+<div class="admin-card" style="max-width: 820px; margin-top: 24px;">
+    <h3 style="font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+        <span class="material-symbols-outlined" style="color: var(--accent);">lock_reset</span>
+        Administrator Security &amp; Password Management
+    </h3>
+    <p style="font-size: 13px; color: var(--text-light); line-height: 1.6; margin-bottom: 16px;">
+        Need to update your master credentials? You can request a single-use, time-limited password reset link sent directly to your registered administrator email address (<strong>{{ Auth::guard('admin')->user()->email ?? 'victoroduor723@gmail.com' }}</strong>).
+    </p>
+
+    <form action="{{ route('admin.password.send-reset') }}" method="POST" onsubmit="return confirm('Dispatch a secure password-reset link to your administrator email?');">
+        @csrf
+        <button type="submit" class="btn-hero-secondary" style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; font-size: 14px;">
+            <span class="material-symbols-outlined" style="font-size: 18px;">mail</span>
+            Dispatch Password Reset Link
+        </button>
+    </form>
+</div>
 @endsection

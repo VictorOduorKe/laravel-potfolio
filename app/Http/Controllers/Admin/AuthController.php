@@ -5,12 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use App\Services\MailService;
+use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rules\Password as PasswordRule;
 
 class AuthController extends Controller
 {
@@ -157,6 +162,195 @@ class AuthController extends Controller
         }
 
         return back()->with('status', 'A fresh verification code has been dispatched to your email.');
+    }
+
+    /**
+     * Show the admin password reset request form.
+     */
+    public function showForgotPassword(): View|RedirectResponse
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('admin.auth.forgot-password');
+    }
+
+    /**
+     * Send a password reset link to the administrator's email.
+     */
+    public function sendResetLinkEmail(Request $request): RedirectResponse|JsonResponse
+    {
+        $request->validate([
+            'email' => ['required', 'email'],
+        ]);
+
+        $email = strtolower(trim((string) $request->input('email')));
+        $admin = Admin::where('email', $email)->first();
+
+        $genericMessage = 'If an administrator account is associated with this email address, a secure password-reset link has been dispatched.';
+
+        if ($admin) {
+            // Generate single-use, time-limited token using Laravel's password broker for admins
+            $token = Password::broker('admins')->createToken($admin);
+
+            $expiresInMinutes = (int) config('auth.passwords.admins.expire', 60);
+            $sent = MailService::sendPasswordResetLink($admin, $token, $expiresInMinutes);
+
+            if (!$sent) {
+                Log::error('Failed to dispatch password reset email to administrator.', [
+                    'email' => $admin->email,
+                ]);
+
+                if ($request->wantsJson()) {
+                    return response()->json([
+                        'message' => 'Unable to dispatch reset email at this moment. Please check server logs.',
+                    ], 500);
+                }
+
+                return back()->withInput($request->only('email'))->withErrors([
+                    'email' => 'Unable to dispatch reset email at this moment. Please try again later.',
+                ]);
+            }
+        }
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => $genericMessage,
+            ]);
+        }
+
+        return back()->with('status', $genericMessage);
+    }
+
+    /**
+     * Display the password reset view for the given token.
+     */
+    public function showResetPassword(Request $request, string $token): View|RedirectResponse
+    {
+        if (Auth::guard('admin')->check()) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        return view('admin.auth.reset-password', [
+            'token' => $token,
+            'email' => $request->query('email', old('email')),
+        ]);
+    }
+
+    /**
+     * Reset the administrator's password.
+     */
+    public function resetPassword(Request $request): RedirectResponse|JsonResponse
+    {
+        $request->validate([
+            'token' => ['required', 'string'],
+            'email' => ['required', 'email'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'confirmed',
+                PasswordRule::min(8)
+                    ->letters()
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols(),
+            ],
+        ]);
+
+        $credentials = $request->only('email', 'password', 'password_confirmation', 'token');
+        $credentials['email'] = strtolower(trim((string) $credentials['email']));
+
+        $status = Password::broker('admins')->reset(
+            $credentials,
+            function (Admin $admin, string $password) {
+                $admin->forceFill([
+                    'password' => Hash::make($password),
+                    'login_token' => null,
+                    'login_token_expires_at' => null,
+                ]);
+
+                $admin->save();
+
+                event(new PasswordReset($admin));
+            }
+        );
+
+        if ($status === Password::PASSWORD_RESET) {
+            // Invalidate any existing sessions for security
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            Log::info("Administrator password reset successfully for {$credentials['email']}.");
+
+            $successMessage = 'Your password has been successfully reset. Please log in with your new credentials.';
+
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => $successMessage,
+                ]);
+            }
+
+            return redirect()->route('admin.login')->with('status', $successMessage);
+        }
+
+        $errorMessage = __($status);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'message' => $errorMessage,
+                'errors' => ['email' => [$errorMessage]],
+            ], 422);
+        }
+
+        return back()->withInput($request->only('email'))->withErrors([
+            'email' => $errorMessage,
+        ]);
+    }
+
+    /**
+     * Allow an authenticated administrator to dispatch a reset link to their registered email.
+     */
+    public function sendResetLinkFromSettings(Request $request): RedirectResponse|JsonResponse
+    {
+        /** @var Admin|null $admin */
+        $admin = Auth::guard('admin')->user();
+        if (!$admin) {
+            abort(403, 'Unauthorized administrator action.');
+        }
+
+        $token = Password::broker('admins')->createToken($admin);
+        $expiresInMinutes = (int) config('auth.passwords.admins.expire', 60);
+        $sent = MailService::sendPasswordResetLink($admin, $token, $expiresInMinutes);
+
+        if (!$sent) {
+            Log::error('Settings action failed: Could not dispatch password reset email.', [
+                'email' => $admin->email,
+            ]);
+
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Failed to dispatch password reset link. Please check server mail settings.',
+                ], 500);
+            }
+
+            return back()->with('error', 'Failed to dispatch password reset email. Please verify mail server settings.');
+        }
+
+        $message = "A secure password-reset link has been dispatched to your registered email address ({$admin->email}).";
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => $message,
+            ]);
+        }
+
+        return back()->with('success', $message);
     }
 
     /**

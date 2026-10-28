@@ -135,6 +135,18 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::get('/verify', [AdminAuthController::class, 'showVerify'])->name('verify');
     Route::post('/verify', [AdminAuthController::class, 'verify']);
     Route::post('/resend-otp', [AdminAuthController::class, 'resendOtp'])->name('resend-otp');
+
+    // Admin Password Reset
+    Route::get('/forgot-password', [AdminAuthController::class, 'showForgotPassword'])->name('password.request');
+    Route::post('/forgot-password', [AdminAuthController::class, 'sendResetLinkEmail'])->middleware('throttle:5,1')->name('password.email');
+    Route::get('/reset-password/{token}', [AdminAuthController::class, 'showResetPassword'])->name('password.reset');
+    Route::post('/reset-password', [AdminAuthController::class, 'resetPassword'])->middleware('throttle:5,1')->name('password.update');
+
+    // Backward-Compatible Aliases
+    Route::get('/password/reset', [AdminAuthController::class, 'showForgotPassword'])->name('password.request.legacy');
+    Route::post('/password/email', [AdminAuthController::class, 'sendResetLinkEmail'])->middleware('throttle:5,1')->name('password.email.legacy');
+    Route::get('/password/reset/{token}', [AdminAuthController::class, 'showResetPassword'])->name('password.reset.legacy');
+    Route::post('/password/reset', [AdminAuthController::class, 'resetPassword'])->middleware('throttle:5,1')->name('password.update.legacy');
 });
 
 /*
@@ -175,6 +187,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     // System Settings
     Route::get('/settings', [AdminSettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [AdminSettingController::class, 'update'])->name('settings.update');
+    Route::post('/settings/password-reset', [AdminAuthController::class, 'sendResetLinkFromSettings'])->middleware('throttle:5,1')->name('password.send-reset');
+    Route::post('/settings/send-password-reset', [AdminAuthController::class, 'sendResetLinkFromSettings'])->middleware('throttle:5,1');
 
     // Footer & Social Links Settings
     Route::get('/footer', [AdminFooterController::class, 'index'])->name('footer.index');

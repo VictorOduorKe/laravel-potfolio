@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Mail\AdminOtpMail;
+use App\Mail\AdminResetPasswordMail;
 use App\Mail\ContactConfirmationVisitorMail;
 use App\Mail\ContactReceivedAdminMail;
+use App\Models\Admin;
 use App\Models\Contact;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -22,6 +24,21 @@ class MailService
             return true;
         } catch (\Throwable $e) {
             Log::error("Failed sending Admin OTP email to {$toEmail}: " . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Send password reset link email to Admin using Laravel native Mail.
+     */
+    public static function sendPasswordResetLink(Admin $admin, string $token, int $expiresInMinutes = 60): bool
+    {
+        try {
+            Mail::to($admin->email)->send(new AdminResetPasswordMail($admin, $token, $expiresInMinutes));
+            Log::info("Admin password reset email dispatched to {$admin->email}.");
+            return true;
+        } catch (\Throwable $e) {
+            Log::error("Failed sending admin password reset email to {$admin->email}: " . $e->getMessage());
             return false;
         }
     }

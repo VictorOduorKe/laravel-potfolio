@@ -17,7 +17,7 @@
         <!-- Sidebar Navigation -->
         <aside class="admin-sidebar">
             <div class="admin-sidebar-header">
-                <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 28px; filter: brightness(0) invert(1);" onerror="this.src='{{ asset('logo.png') }}'">
+                <img src="{{ asset('logo.svg') }}" alt="TheTechCraft Logo" style="height: 32px; width: auto;" onerror="this.src='{{ asset('logo.png') }}'">
                 <div>
                     <h3 style="color: #ffffff; font-size: 16px; margin: 0; font-weight: 700;">TheTechCraft</h3>
                     <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Admin Portal</span>
@@ -91,6 +91,18 @@
                     <div style="padding: 14px 20px; border-radius: var(--radius-md); background: rgba(19, 115, 51, 0.1); border: 1px solid #137333; color: #137333; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; font-weight: 500;">
                         <span class="material-symbols-outlined">check_circle</span>
                         {{ session('success') }}
+                    </div>
+                @endif
+                @if(session('error'))
+                    <div style="padding: 14px 20px; border-radius: var(--radius-md); background: rgba(186, 26, 26, 0.1); border: 1px solid var(--danger); color: var(--danger); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; font-weight: 500;">
+                        <span class="material-symbols-outlined">error</span>
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if(session('status'))
+                    <div style="padding: 14px 20px; border-radius: var(--radius-md); background: rgba(52, 139, 203, 0.1); border: 1px solid var(--accent); color: var(--accent); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; font-weight: 500;">
+                        <span class="material-symbols-outlined">info</span>
+                        {{ session('status') }}
                     </div>
                 @endif
                 @if(isset($errors) && $errors->any())

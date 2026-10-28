@@ -4,7 +4,7 @@
             <!-- Column 1: Brand Info -->
             <div>
                 <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                    <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 32px; filter: brightness(0) invert(1);" onerror="this.src='{{ asset('logo.png') }}'">
+                    <img src="{{ asset('logo.svg') }}" alt="TheTechCraft Logo" style="height: 32px; width: auto;" onerror="this.src='{{ asset('logo.png') }}'">
                     <span style="font-family: var(--font-heading); font-size: 20px; font-weight: 800; color: #ffffff;">TheTechCraft</span>
                 </div>
                 <p style="font-size: 14px; line-height: 1.6; color: #94a3b8; margin-bottom: 20px;">
