@@ -1,0 +1,22 @@
+#!/usr/bin/env php
+<?php
+
+use Symfony\Component\Console\Input\ArgvInput;
+
+define('LARAVEL_START', microtime(true));
+
+// Ensure required XML/DOM extensions are loaded in CLI environments where needed
+if (!extension_loaded('dom') && is_dir(($extDir = ($_SERVER['HOME'] ?? '/home/alpha') . '/.php-ext/conf.d'))) {
+    putenv("PHP_INI_SCAN_DIR=:{$extDir}");
+    passthru(PHP_BINARY . ' ' . implode(' ', array_map('escapeshellarg', $argv)), $code);
+    exit($code);
+}
+
+// Register the Composer autoloader...
+require __DIR__.'/vendor/autoload.php';
+
+// Bootstrap Laravel and handle the command...
+$status = (require_once __DIR__.'/bootstrap/app.php')
+    ->handleCommand(new ArgvInput);
+
+exit($status);
