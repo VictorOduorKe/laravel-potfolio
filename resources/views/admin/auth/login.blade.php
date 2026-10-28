@@ -8,8 +8,8 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
-<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #0f1527; padding: 20px;">
-    <div style="width: 100%; max-width: 440px; background: #ffffff; border-radius: var(--radius-xl); padding: 40px; box-shadow: var(--shadow-lg);">
+<body style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #0f1527; padding: clamp(12px, 3vw, 20px);">
+    <div style="width: 100%; max-width: 440px; background: #ffffff; border-radius: var(--radius-xl); padding: clamp(24px, 6vw, 40px); box-shadow: var(--shadow-lg);">
         <div style="text-align: center; margin-bottom: 32px;">
             <img src="{{ asset('logo.svg') }}" alt="Logo" style="height: 48px; margin-bottom: 16px;" onerror="this.src='{{ asset('logo.png') }}'">
             <h1 style="font-size: 24px; font-weight: 800; color: var(--primary); margin-bottom: 6px;">TheTechCraft Admin</h1>

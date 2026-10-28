@@ -21,7 +21,7 @@
         <form action="{{ route('admin.footer.contact.update') }}" method="POST">
             @csrf
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-bottom: 24px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 20px; margin-bottom: 24px;">
                 <!-- Physical Address -->
                 <div>
                     <label class="form-label" for="footer_address">Physical / Street Address</label>
@@ -85,7 +85,7 @@
 
             <!-- Visibility Controls -->
             <h4 style="font-size: 15px; font-weight: 700; color: var(--primary); margin: 0 0 16px 0;">Public Visibility Controls</h4>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; background: var(--background); padding: 18px 20px; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 28px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 16px; background: var(--background); padding: 18px 20px; border-radius: var(--radius-md); border: 1px solid var(--border); margin-bottom: 28px;">
                 <label style="display: flex; align-items: flex-start; gap: 10px; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--text);">
                     <input type="checkbox" name="footer_show_address" value="1" 
                            {{ old('footer_show_address', $contactSettings['footer_show_address'] ?? '1') == '1' ? 'checked' : '' }} 
@@ -139,11 +139,11 @@
     <!-- =========================================================================
          AREA B: SOCIAL LINKS MANAGEMENT
          ========================================================================= -->
-    <div style="display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start;">
+    <div class="admin-grid-split">
         
         <!-- Left Column: Existing Social Links Table & Reordering -->
         <div class="admin-card" style="padding: 0; overflow: hidden;">
-            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; background: #ffffff;">
+            <div style="padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; background: #ffffff;">
                 <div>
                     <h3 style="font-size: 16px; font-weight: 700; color: var(--primary); margin: 0 0 4px 0;">Active &amp; Configured Social Links</h3>
                     <span style="font-size: 12px; color: var(--text-muted);">Links appear in the public footer in the order listed below.</span>
@@ -153,7 +153,7 @@
                 </button>
             </div>
 
-            <div style="overflow-x: auto;">
+            <div class="admin-table-responsive">
                 <table class="data-table" id="social-links-table">
                     <thead>
                         <tr>

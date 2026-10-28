@@ -5,7 +5,7 @@
 
 @section('content')
 <!-- Stats Grid -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 32px;">
+<div class="admin-grid-stats">
     <div class="admin-card" style="margin: 0;">
         <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Total Projects</span>
         <div style="font-size: 32px; font-weight: 800; color: var(--primary); margin: 8px 0 4px 0;">{{ $stats['projects_count'] }}</div>
@@ -60,7 +60,7 @@
 </div>
 
 <!-- Two-Column Recent Activity -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px;">
+<div class="admin-grid-2col">
     <!-- Recent Messages -->
     <div class="admin-card">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">

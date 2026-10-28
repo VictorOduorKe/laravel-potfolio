@@ -5,7 +5,7 @@
 
 @section('content')
 <div class="admin-card" style="max-width: 700px;">
-    <div style="border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px;">
         <div>
             <h3 style="font-size: 20px; font-weight: 800; color: var(--primary); margin: 0 0 6px 0;">
                 {{ $contact->first_name }} {{ $contact->last_name }}
@@ -19,10 +19,10 @@
         </a>
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 24px; background: var(--background); padding: 16px; border-radius: var(--radius-sm);">
+    <div class="admin-form-row-2col" style="gap: 16px; margin-bottom: 24px; background: var(--background); padding: 16px; border-radius: var(--radius-sm);">
         <div>
             <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Email</span>
-            <div style="font-size: 14px; font-weight: 600; color: var(--accent); margin-top: 2px;">{{ $contact->email }}</div>
+            <div style="font-size: 14px; font-weight: 600; color: var(--accent); margin-top: 2px; word-break: break-all;">{{ $contact->email }}</div>
         </div>
         <div>
             <span style="font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Phone</span>
@@ -32,10 +32,10 @@
 
     <div style="margin-bottom: 32px;">
         <span style="font-size: 13px; font-weight: 700; color: var(--primary); text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 10px;">Message Body:</span>
-        <div style="background: #ffffff; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: 20px; font-size: 15px; line-height: 1.7; color: var(--text); white-space: pre-wrap;">{{ $contact->message }}</div>
+        <div style="background: #ffffff; border: 1.5px solid var(--border); border-radius: var(--radius-md); padding: clamp(14px, 3vw, 20px); font-size: 15px; line-height: 1.7; color: var(--text); white-space: pre-wrap; word-break: break-word;">{{ $contact->message }}</div>
     </div>
 
-    <div style="display: flex; justify-content: space-between; align-items: center;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
         <a href="{{ route('admin.messages.index') }}" class="btn-hero-secondary">&larr; Back to Inbox</a>
         <form action="{{ route('admin.messages.destroy', $contact) }}" method="POST" onsubmit="return confirm('Delete this message permanently?');">
             @csrf

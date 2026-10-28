@@ -14,14 +14,22 @@
 </head>
 <body>
     <div class="admin-layout">
+        <!-- Mobile Sidebar Backdrop Overlay -->
+        <div id="admin-sidebar-backdrop" class="admin-sidebar-backdrop" aria-hidden="true"></div>
+
         <!-- Sidebar Navigation -->
-        <aside class="admin-sidebar">
+        <aside class="admin-sidebar" id="admin-sidebar" role="navigation" aria-label="Admin Navigation">
             <div class="admin-sidebar-header">
-                <img src="{{ asset('logo.svg') }}" alt="TheTechCraft Logo" style="height: 32px; width: auto;" onerror="this.src='{{ asset('logo.png') }}'">
-                <div>
-                    <h3 style="color: #ffffff; font-size: 16px; margin: 0; font-weight: 700;">TheTechCraft</h3>
-                    <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Admin Portal</span>
+                <div style="display: flex; align-items: center; gap: 12px; min-width: 0;">
+                    <img src="{{ asset('logo.svg') }}" alt="TheTechCraft Logo" style="height: 32px; width: auto;" onerror="this.src='{{ asset('logo.png') }}'">
+                    <div style="min-width: 0;">
+                        <h3 style="color: #ffffff; font-size: 16px; margin: 0; font-weight: 700; white-space: nowrap;">TheTechCraft</h3>
+                        <span style="font-size: 11px; color: #94a3b8; text-transform: uppercase;">Admin Portal</span>
+                    </div>
                 </div>
+                <button type="button" id="admin-sidebar-close" class="admin-sidebar-close-btn" aria-label="Close Navigation Drawer">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
             </div>
 
             <nav style="flex: 1; padding: 20px 0; overflow-y: auto;">
@@ -76,11 +84,16 @@
         <!-- Main Content Area -->
         <div class="admin-main">
             <header class="admin-topbar">
-                <h2 style="font-size: 20px; font-weight: 700; color: var(--primary); margin: 0;">@yield('header', 'Dashboard')</h2>
-                <div style="display: flex; align-items: center; gap: 16px;">
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981;"></span>
-                        <span style="font-size: 13px; font-weight: 600; color: var(--text);">{{ Auth::guard('admin')->user()->username ?? 'Victor Oduor' }}</span>
+                <div style="display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1;">
+                    <button type="button" id="admin-sidebar-toggle" class="admin-menu-toggle" aria-label="Open Navigation Menu" aria-expanded="false" aria-controls="admin-sidebar">
+                        <span class="material-symbols-outlined">menu</span>
+                    </button>
+                    <h2 class="admin-header-title">@yield('header', 'Dashboard')</h2>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px; flex-shrink: 0;">
+                    <div class="admin-user-badge">
+                        <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; flex-shrink: 0;"></span>
+                        <span class="admin-user-name">{{ Auth::guard('admin')->user()->username ?? 'Victor Oduor' }}</span>
                     </div>
                 </div>
             </header>

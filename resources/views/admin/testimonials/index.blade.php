@@ -5,7 +5,7 @@
 
 @section('content')
 <!-- Metric Summary Cards -->
-<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 28px;">
+<div class="admin-grid-stats" style="margin-bottom: 28px;">
     <div class="admin-card" style="display: flex; align-items: center; gap: 16px; padding: 20px;">
         <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(33, 45, 82, 0.08); display: flex; align-items: center; justify-content: center; color: var(--primary);">
             <span class="material-symbols-outlined" style="font-size: 26px;">reviews</span>
@@ -37,10 +37,10 @@
     </div>
 </div>
 
-<div style="display: grid; grid-template-columns: 1fr 380px; gap: 32px; align-items: start;">
+<div class="admin-grid-split">
     <!-- Left Column: Testimonials Table -->
     <div class="admin-card" style="padding: 0; overflow: hidden;">
-        <div style="padding: 18px 24px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between;">
+        <div style="padding: 18px 24px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
             <div>
                 <h3 style="font-size: 16px; font-weight: 700; color: var(--primary); margin: 0;">Testimonials Records</h3>
                 <span style="font-size: 13px; color: var(--text-muted);">Manage publishing status, client feedback, ratings, and avatars</span>
@@ -48,7 +48,7 @@
             <span class="tag-badge" style="font-size: 11px;">Sorted by Display Order &amp; Date</span>
         </div>
 
-        <div style="overflow-x: auto;">
+        <div class="admin-table-responsive">
             <table class="data-table" style="width: 100%;">
                 <thead>
                     <tr>
@@ -193,7 +193,7 @@
             </div>
 
             <!-- Rating & Display Order Row -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+            <div class="admin-form-row-2col" style="margin-bottom: 16px;">
                 <div>
                     <label class="form-label" for="add_rating">Rating (Optional)</label>
                     <select id="add_rating" name="rating" class="form-control">
@@ -277,7 +277,7 @@
             </div>
 
             <!-- Rating & Order -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+            <div class="admin-form-row-2col" style="margin-bottom: 16px;">
                 <div>
                     <label class="form-label" for="edit_rating">Rating (Optional)</label>
                     <select id="edit_rating" name="rating" class="form-control">

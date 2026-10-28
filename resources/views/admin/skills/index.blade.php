@@ -4,10 +4,11 @@
 @section('header', 'Skills Bento Grid')
 
 @section('content')
-<div style="display: grid; grid-template-columns: 1fr 360px; gap: 32px; align-items: start;">
+<div class="admin-grid-split">
     <!-- Left: Skills List grouped by category -->
     <div class="admin-card" style="padding: 0; overflow: hidden;">
-        <table class="data-table">
+        <div class="admin-table-responsive">
+            <table class="data-table">
             <thead>
                 <tr>
                     <th>Skill Name</th>
@@ -68,6 +69,7 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Right: Add New Skill Card -->

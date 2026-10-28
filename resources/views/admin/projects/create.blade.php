@@ -43,7 +43,7 @@
             </span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 24px;">
+        <div class="admin-form-row-2col" style="margin-bottom: 24px;">
             <div>
                 <label class="form-label" for="image">Upload Cover Image (< 5MB)</label>
                 <input type="file" id="image" name="image" class="form-control" accept="image/*">
@@ -62,7 +62,7 @@
             </label>
         </div>
 
-        <div style="display: flex; gap: 14px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 14px;">
             <button type="submit" class="btn-hero-primary">Create Project</button>
             <a href="{{ route('admin.projects.index') }}" class="btn-hero-secondary">Cancel</a>
         </div>

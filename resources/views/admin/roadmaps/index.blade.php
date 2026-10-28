@@ -4,10 +4,11 @@
 @section('header', 'Roadmap Milestones')
 
 @section('content')
-<div style="display: grid; grid-template-columns: 1fr 340px; gap: 32px; align-items: start;">
+<div class="admin-grid-split">
     <!-- Left: Roadmaps List -->
     <div class="admin-card" style="padding: 0; overflow: hidden;">
-        <table class="data-table">
+        <div class="admin-table-responsive">
+            <table class="data-table">
             <thead>
                 <tr>
                     <th>Milestone Title</th>
@@ -65,6 +66,7 @@
                 @endforelse
             </tbody>
         </table>
+        </div>
     </div>
 
     <!-- Right: Add Milestone Form -->

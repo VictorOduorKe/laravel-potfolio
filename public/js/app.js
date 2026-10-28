@@ -1265,6 +1265,79 @@ function initTestimonialsCarousel() {
 }
 
 /* ==========================================================================
+   Admin Dashboard Navigation & Mobile Drawer
+   ========================================================================== */
+function initAdminNavigation() {
+    const sidebar = document.getElementById('admin-sidebar');
+    const toggle = document.getElementById('admin-sidebar-toggle');
+    const backdrop = document.getElementById('admin-sidebar-backdrop');
+    const closeBtn = document.getElementById('admin-sidebar-close');
+
+    if (!sidebar || !toggle) return;
+
+    function openSidebar() {
+        sidebar.classList.add('open');
+        if (backdrop) backdrop.classList.add('active');
+        toggle.setAttribute('aria-expanded', 'true');
+        document.body.classList.add('admin-sidebar-locked');
+        if (closeBtn) closeBtn.focus();
+    }
+
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        if (backdrop) backdrop.classList.remove('active');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('admin-sidebar-locked');
+    }
+
+    toggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (sidebar.classList.contains('open')) {
+            closeSidebar();
+        } else {
+            openSidebar();
+        }
+    });
+
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            closeSidebar();
+            toggle.focus();
+        });
+    }
+
+    if (backdrop) {
+        backdrop.addEventListener('click', () => {
+            closeSidebar();
+        });
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            closeSidebar();
+            toggle.focus();
+        }
+    });
+
+    // Close on navigation link click when on mobile/tablet
+    sidebar.querySelectorAll('.admin-nav-link').forEach((link) => {
+        link.addEventListener('click', () => {
+            if (window.innerWidth < 1024) {
+                closeSidebar();
+            }
+        });
+    });
+
+    // Reset drawer state if window is resized to desktop width
+    window.addEventListener('resize', () => {
+        if (window.innerWidth >= 1024 && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+}
+
+/* ==========================================================================
    Master Application Initialization (Ensures all modules & classes are defined)
    ========================================================================== */
 onReady(() => {
@@ -1277,4 +1350,5 @@ onReady(() => {
     initToastAutoDismiss();
     initSkillsBento();
     initTestimonialsCarousel();
+    initAdminNavigation();
 });

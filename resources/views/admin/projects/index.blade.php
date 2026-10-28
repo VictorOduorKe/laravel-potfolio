@@ -4,7 +4,7 @@
 @section('header', 'Portfolio Projects')
 
 @section('content')
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+<div class="admin-page-header">
     <p style="color: var(--text-light); margin: 0; font-size: 14px;">
         Manage your case studies, systems architecture, live URLs, and repositories.
     </p>
@@ -14,7 +14,7 @@
 </div>
 
 <div class="admin-card" style="padding: 0; overflow: hidden;">
-    <div style="overflow-x: auto;">
+    <div class="admin-table-responsive">
         <table class="data-table">
             <thead>
                 <tr>

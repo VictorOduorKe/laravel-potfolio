@@ -45,7 +45,7 @@
             </span>
         </div>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; margin-bottom: 24px;">
+        <div class="admin-form-row-2col" style="margin-bottom: 24px;">
             <div>
                 <label class="form-label" for="image">Upload New Cover Image</label>
                 <input type="file" id="image" name="image" class="form-control" accept="image/*">
@@ -57,7 +57,7 @@
         </div>
 
         @if($project->image_url)
-        <div style="margin-bottom: 24px; padding: 12px; background: var(--background); border-radius: var(--radius-sm); display: flex; align-items: center; gap: 16px;">
+        <div style="margin-bottom: 24px; padding: 12px; background: var(--background); border-radius: var(--radius-sm); display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
             <img src="{{ $project->image_url }}" alt="Cover" style="height: 60px; border-radius: 4px; border: 1px solid var(--border);" onerror="this.style.opacity='0.4';">
             <span style="font-size: 13px; color: var(--text-muted); word-break: break-all;">Current Cover Image: {{ $project->image_url }}</span>
         </div>
@@ -70,7 +70,7 @@
             </label>
         </div>
 
-        <div style="display: flex; gap: 14px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 14px;">
             <button type="submit" class="btn-hero-primary">Save Changes</button>
             <a href="{{ route('admin.projects.index') }}" class="btn-hero-secondary">Cancel</a>
         </div>

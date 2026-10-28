@@ -5,7 +5,8 @@
 
 @section('content')
 <div class="admin-card" style="padding: 0; overflow: hidden;">
-    <table class="data-table">
+    <div class="admin-table-responsive">
+        <table class="data-table">
         <thead>
             <tr>
                 <th>Sender</th>
@@ -57,6 +58,7 @@
             @endforelse
         </tbody>
     </table>
+    </div>
 </div>
 
 <div style="margin-top: 24px; display: flex; justify-content: center;">

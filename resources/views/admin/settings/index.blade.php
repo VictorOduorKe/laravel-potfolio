@@ -52,7 +52,7 @@
             <p style="font-size: 13px; color: var(--text-light); line-height: 1.5; margin: 0 0 10px 0;">
                 Once verified in Google Search Console, submit your XML sitemap URL under <strong>Index &gt; Sitemaps</strong>:
             </p>
-            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--primary); background: #ffffff; padding: 8px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border-light);">
+            <div style="font-family: var(--font-mono); font-size: 12px; color: var(--primary); background: #ffffff; padding: 8px 12px; border-radius: var(--radius-xs); border: 1px solid var(--border-light); word-break: break-all; overflow-x: auto;">
                 https://thetechcraft.co.ke/sitemap.xml
             </div>
         </div>
