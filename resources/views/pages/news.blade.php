@@ -45,7 +45,7 @@
             </div>
 
             @if($article->source_url)
-            <div style="border-top: 1px solid var(--border-light); padding-top: 16px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="border-top: 1px solid var(--border-light); padding-top: 16px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
                 <span style="font-size: 13px; color: var(--text-light);">Primary Source Grounding</span>
                 <a href="{{ $article->source_url }}" target="_blank" rel="noopener" style="font-size: 14px; font-weight: 600; color: var(--accent); display: flex; align-items: center; gap: 4px;">
                     Read on {{ $article->source ?: 'External Source' }} <span class="material-symbols-outlined" style="font-size: 16px;">open_in_new</span>

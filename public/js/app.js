@@ -10,18 +10,6 @@ function onReady(fn) {
     }
 }
 
-onReady(() => {
-    initScrollReveal();
-    initProjectShowcase();
-    initAnimatedCounters();
-    initMobileNav();
-    initChatAssistant();
-    initContactForm();
-    initToastAutoDismiss();
-    initSkillsBento();
-    initTestimonialsCarousel();
-});
-
 // Enable smooth scrolling after initial page load & scroll restoration settle
 window.addEventListener('load', () => {
     requestAnimationFrame(() => {
@@ -289,24 +277,49 @@ function initMobileNav() {
 
     if (!toggleBtn || !drawer) return;
 
+    toggleBtn.setAttribute('aria-expanded', 'false');
+
     const openMenu = () => {
         drawer.classList.remove('hidden');
         if (backdrop) backdrop.classList.remove('hidden');
         document.body.style.overflow = 'hidden';
+        toggleBtn.setAttribute('aria-expanded', 'true');
+        if (closeBtn) closeBtn.focus();
     };
 
     const closeMenu = () => {
         drawer.classList.add('hidden');
         if (backdrop) backdrop.classList.add('hidden');
         document.body.style.overflow = '';
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        toggleBtn.focus();
     };
 
-    toggleBtn.addEventListener('click', openMenu);
-    if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+    toggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (drawer.classList.contains('hidden')) {
+            openMenu();
+        } else {
+            closeMenu();
+        }
+    });
+
+    if (closeBtn) closeBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        closeMenu();
+    });
+
     if (backdrop) backdrop.addEventListener('click', closeMenu);
 
     drawer.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', closeMenu);
+    });
+
+    // Close mobile drawer on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !drawer.classList.contains('hidden')) {
+            closeMenu();
+        }
     });
 }
 
@@ -1250,3 +1263,18 @@ function initTestimonialsCarousel() {
     goToSlide(0, true);
     startAutoPlay();
 }
+
+/* ==========================================================================
+   Master Application Initialization (Ensures all modules & classes are defined)
+   ========================================================================== */
+onReady(() => {
+    initScrollReveal();
+    initProjectShowcase();
+    initAnimatedCounters();
+    initMobileNav();
+    initChatAssistant();
+    initContactForm();
+    initToastAutoDismiss();
+    initSkillsBento();
+    initTestimonialsCarousel();
+});

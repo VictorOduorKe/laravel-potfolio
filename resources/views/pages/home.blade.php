@@ -201,7 +201,7 @@
 
                 <!-- Skills Badges / Tiles -->
                 @if($group['id'] === 'architecture')
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%;">
+                    <div class="bento-architecture-grid">
                         <div>
                             <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #94a3b8; margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">
                                 <span class="material-symbols-outlined" style="font-size: 15px; color: #fbbf24;">architecture</span>

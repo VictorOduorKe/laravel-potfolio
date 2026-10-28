@@ -80,6 +80,7 @@ a {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 24px;
+  box-sizing: border-box;
 }
 
 @media (max-width: 640px) {
@@ -104,6 +105,16 @@ a {
   border-bottom: 1px solid rgba(222, 228, 239, 0.6);
   display: flex;
   align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.site-header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-width: 0;
 }
 
 .nav-link {
@@ -289,6 +300,8 @@ a {
   padding: 60px 0;
   position: relative;
   scroll-margin-top: 100px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .skills-filter-toolbar {
@@ -303,6 +316,10 @@ a {
   border: 1px solid var(--border);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);
+  min-width: 0;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .skills-tab-list {
@@ -310,6 +327,8 @@ a {
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .btn-skill-filter {
@@ -326,6 +345,7 @@ a {
   cursor: pointer;
   transition: var(--transition);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .btn-skill-filter:hover {
@@ -538,6 +558,8 @@ a {
   flex-wrap: wrap;
   gap: 8px;
   align-items: stretch;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .skill-tile {
@@ -555,6 +577,9 @@ a {
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: default;
   user-select: none;
+  max-width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
 }
 
 .skill-tile:hover,
@@ -574,12 +599,15 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .skill-tile-name {
   font-weight: 500;
   color: #e2e8f0;
   white-space: nowrap;
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .skill-tile:hover .skill-tile-name {
@@ -681,24 +709,44 @@ a {
   }
   .bento-skill-card {
     padding: 18px;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .skills-filter-toolbar {
     flex-direction: column;
     align-items: stretch;
     padding: 12px;
     gap: 12px;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
   }
   .skills-tab-list {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding-bottom: 4px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(33, 45, 82, 0.25) transparent;
+    padding-bottom: 6px;
     gap: 6px;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    touch-action: pan-x;
+    overscroll-behavior-x: contain;
   }
   .skills-tab-list::-webkit-scrollbar {
-    display: none;
+    height: 4px;
+    display: block;
+  }
+  .skills-tab-list::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .skills-tab-list::-webkit-scrollbar-thumb {
+    background: rgba(33, 45, 82, 0.25);
+    border-radius: 4px;
   }
   .skills-search-wrapper {
     max-width: 100%;
@@ -713,6 +761,31 @@ a {
   }
   .bento-count-pill {
     align-self: flex-start;
+  }
+}
+
+.bento-architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+  gap: 20px;
+  width: 100%;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .skill-tile {
+    white-space: normal;
+  }
+  .skill-tile-name {
+    white-space: normal;
+    word-break: break-word;
+  }
+  .bento-skill-card {
+    padding: 16px;
+  }
+  .bento-architecture-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 }
 
@@ -877,6 +950,8 @@ a {
   }
   .project-grid-layout.is-carousel .compact-card {
     flex: 0 0 100%;
+    min-width: 0;
+    max-width: 100%;
   }
   .btn-view-toggle .btn-text {
     display: none;
@@ -1005,6 +1080,7 @@ a {
   display: flex;
   flex-direction: column;
   flex: 1;
+  min-width: 0;
 }
 
 .compact-card-impact {
@@ -2342,6 +2418,29 @@ a {
   border-top: 1px solid var(--border);
   display: flex;
   gap: 8px;
+}
+
+@media (max-width: 768px) {
+  .chat-launcher {
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+    right: calc(16px + env(safe-area-inset-right, 0px));
+    width: 52px;
+    height: 52px;
+    box-shadow: 0 4px 14px rgba(228, 116, 41, 0.45);
+  }
+  .chat-launcher .material-symbols-outlined {
+    font-size: 24px !important;
+  }
+  .chat-window {
+    left: 12px;
+    right: 12px;
+    bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    width: auto;
+    max-width: calc(100vw - 24px);
+    height: 500px;
+    max-height: calc(100vh - 96px);
+    border-radius: var(--radius-md);
+  }
 }
 
 /* Scroll Reveal with Progressive Enhancement & Stagger */

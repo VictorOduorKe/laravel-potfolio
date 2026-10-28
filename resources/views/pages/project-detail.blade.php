@@ -254,7 +254,7 @@
                 </a>
             </div>
 
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px;">
                 @foreach($otherProjects as $other)
                     <div class="project-compact-card">
                         <div class="card-image-wrapper">
